@@ -12,22 +12,11 @@ module Legion
 
           def initialize(fossil_type:, domain:, content:, extinction_cause:,
                          era: nil, stratum_depth: 0, preservation: nil,
-                         significance: nil, lineage_ids: nil, **)
+                         significance: nil)
             validate_type!(fossil_type)
             validate_cause!(extinction_cause)
-
-            @id               = SecureRandom.uuid
-            @fossil_type      = fossil_type.to_sym
-            @domain           = domain.to_sym
-            @content          = content.to_s
-            @extinction_cause = extinction_cause.to_sym
-            @era              = (era || assign_era(stratum_depth)).to_sym
-            @stratum_depth    = stratum_depth.to_i.clamp(0, 4)
-            @preservation     = (preservation || 0.8).to_f.clamp(0.0, 1.0).round(10)
-            @significance     = (significance || 0.5).to_f.clamp(0.0, 1.0).round(10)
-            @discovered_at    = Time.now.utc
-            @extinct_at       = Time.now.utc - rand(100..10_000_000)
-            @lineage_ids      = Array(lineage_ids).dup
+            assign_core(fossil_type, domain, content, extinction_cause)
+            assign_metadata(era, stratum_depth, preservation, significance)
           end
 
           def erode!(rate: Constants::FOSSILIZATION_RATE)
@@ -66,27 +55,45 @@ module Legion
 
           def to_h
             {
-              id:                @id,
-              fossil_type:       @fossil_type,
-              domain:            @domain,
-              content:           @content,
-              extinction_cause:  @extinction_cause,
-              era:               @era,
-              stratum_depth:     @stratum_depth,
-              preservation:      @preservation,
+              id:                 @id,
+              fossil_type:        @fossil_type,
+              domain:             @domain,
+              content:            @content,
+              extinction_cause:   @extinction_cause,
+              era:                @era,
+              stratum_depth:      @stratum_depth,
+              preservation:       @preservation,
               preservation_label: preservation_label,
-              significance:      @significance,
+              significance:       @significance,
               significance_label: significance_label,
-              discovered_at:     @discovered_at,
-              extinct_at:        @extinct_at,
-              lineage_ids:       @lineage_ids,
-              imprint:           imprint?,
-              keystone:          keystone?,
-              ancient:           ancient?
+              discovered_at:      @discovered_at,
+              extinct_at:         @extinct_at,
+              lineage_ids:        @lineage_ids,
+              imprint:            imprint?,
+              keystone:           keystone?,
+              ancient:            ancient?
             }
           end
 
           private
+
+          def assign_core(fossil_type, domain, content, extinction_cause)
+            @id               = SecureRandom.uuid
+            @fossil_type      = fossil_type.to_sym
+            @domain           = domain.to_sym
+            @content          = content.to_s
+            @extinction_cause = extinction_cause.to_sym
+          end
+
+          def assign_metadata(era, stratum_depth, preservation, significance)
+            @era           = (era || assign_era(stratum_depth)).to_sym
+            @stratum_depth = stratum_depth.to_i.clamp(0, 4)
+            @preservation  = (preservation || 0.8).to_f.clamp(0.0, 1.0).round(10)
+            @significance  = (significance || 0.5).to_f.clamp(0.0, 1.0).round(10)
+            @discovered_at = Time.now.utc
+            @extinct_at    = Time.now.utc - rand(100..10_000_000)
+            @lineage_ids   = []
+          end
 
           def validate_type!(val)
             return if Constants::FOSSIL_TYPES.include?(val.to_sym)

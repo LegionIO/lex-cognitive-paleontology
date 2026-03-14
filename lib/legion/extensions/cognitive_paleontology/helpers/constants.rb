@@ -9,7 +9,7 @@ module Legion
           MAX_STRATA       = 20
           MAX_EXCAVATIONS  = 100
           FOSSILIZATION_RATE = 0.02
-          MIN_FOSSIL_AGE   = 300
+          MIN_FOSSIL_AGE = 300
 
           FOSSIL_TYPES = %i[
             strategy pattern belief heuristic

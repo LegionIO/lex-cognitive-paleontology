@@ -73,7 +73,7 @@ RSpec.describe Legion::Extensions::CognitivePaleontology::Runners::CognitivePale
     end
 
     it 'filters by cause' do
-      result = runner.list_fossils(engine: engine,
+      result = runner.list_fossils(engine:           engine,
                                    extinction_cause: :displacement)
       expect(result[:count]).to eq 1
     end

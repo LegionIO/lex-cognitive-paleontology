@@ -40,7 +40,7 @@ RSpec.describe Legion::Extensions::CognitivePaleontology::Helpers::PaleontologyE
 
   describe '#excavate!' do
     it 'returns fossil from matching stratum' do
-      engine.record_extinction(**fossil_args.merge(stratum_depth: 1))
+      engine.record_extinction(**fossil_args, stratum_depth: 1)
       exc = engine.begin_excavation(target_stratum: 1)
       result = engine.excavate!(excavation_id: exc.id)
       expect(result).to be_a(
@@ -88,8 +88,8 @@ RSpec.describe Legion::Extensions::CognitivePaleontology::Helpers::PaleontologyE
 
   describe '#link_lineage' do
     it 'links two fossils' do
-      f1 = engine.record_extinction(**fossil_args.merge(content: 'child'))
-      f2 = engine.record_extinction(**fossil_args.merge(content: 'parent'))
+      f1 = engine.record_extinction(**fossil_args, content: 'child')
+      f2 = engine.record_extinction(**fossil_args, content: 'parent')
       engine.link_lineage(fossil_id: f1.id, ancestor_id: f2.id)
       expect(f1.lineage_ids).to include(f2.id)
     end
@@ -112,7 +112,7 @@ RSpec.describe Legion::Extensions::CognitivePaleontology::Helpers::PaleontologyE
 
   describe '#keystone_fossils' do
     it 'returns only keystones' do
-      f = engine.record_extinction(**fossil_args.merge(significance: 0.9))
+      f = engine.record_extinction(**fossil_args, significance: 0.9)
       expect(engine.keystone_fossils).to include(f)
     end
   end
@@ -124,7 +124,7 @@ RSpec.describe Legion::Extensions::CognitivePaleontology::Helpers::PaleontologyE
 
     it 'returns true after many rapid extinctions' do
       6.times do
-        engine.record_extinction(**fossil_args.merge(content: SecureRandom.hex(4)))
+        engine.record_extinction(**fossil_args, content: SecureRandom.hex(4))
       end
       expect(engine.mass_extinction?(threshold: 5)).to be true
     end

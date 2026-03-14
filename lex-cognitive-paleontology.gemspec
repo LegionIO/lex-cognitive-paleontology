@@ -10,10 +10,10 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
 
   spec.summary       = 'Cognitive paleontology LEX — study extinct thought ' \
-                        'patterns and fossil records of abandoned ideas'
+                       'patterns and fossil records of abandoned ideas'
   spec.description   = 'Models the fossil record of the mind: extinct thought ' \
-                        'patterns, abandoned strategies, evolutionary dead-ends, ' \
-                        'and the geological layers of cognitive history.'
+                       'patterns, abandoned strategies, evolutionary dead-ends, ' \
+                       'and the geological layers of cognitive history.'
   spec.homepage      = 'https://github.com/LegionIO/lex-cognitive-paleontology'
 
   spec.required_ruby_version = '>= 3.4'

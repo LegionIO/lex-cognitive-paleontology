@@ -53,7 +53,7 @@ module Legion
                            extinction_cause: nil, **)
             eng     = resolve_engine(engine)
             results = filter_fossils(eng.all_fossils,
-                                     fossil_type: fossil_type,
+                                     fossil_type:      fossil_type,
                                      extinction_cause: extinction_cause)
             { success: true, fossils: results.map(&:to_h),
               count: results.size }
@@ -71,9 +71,7 @@ module Legion
           def filter_fossils(fossils, fossil_type:, extinction_cause:)
             r = fossils
             r = r.select { |f| f.fossil_type == fossil_type.to_sym } if fossil_type
-            if extinction_cause
-              r = r.select { |f| f.extinction_cause == extinction_cause.to_sym }
-            end
+            r = r.select { |f| f.extinction_cause == extinction_cause.to_sym } if extinction_cause
             r
           end
 

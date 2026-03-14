@@ -7,6 +7,7 @@ module Legion
     module Helpers
       module Lex; end
     end
+
     module Core; end
   end
 end

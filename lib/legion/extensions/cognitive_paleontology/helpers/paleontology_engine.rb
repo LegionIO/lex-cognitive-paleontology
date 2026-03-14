@@ -105,17 +105,17 @@ module Legion
 
           def paleontology_report
             {
-              total_fossils:      @fossils.size,
-              total_excavations:  @excavations.size,
-              type_breakdown:     count_by(:fossil_type, Constants::FOSSIL_TYPES),
-              cause_breakdown:    count_by(:extinction_cause, Constants::EXTINCTION_CAUSES),
-              era_breakdown:      count_by(:era, Constants::ERA_NAMES),
-              avg_preservation:   avg_field(:preservation),
-              avg_significance:   avg_field(:significance),
-              keystone_count:     @fossils.values.count(&:keystone?),
-              imprint_count:      @fossils.values.count(&:imprint?),
-              ancient_count:      @fossils.values.count(&:ancient?),
-              mass_extinction:    mass_extinction?
+              total_fossils:     @fossils.size,
+              total_excavations: @excavations.size,
+              type_breakdown:    count_by(:fossil_type, Constants::FOSSIL_TYPES),
+              cause_breakdown:   count_by(:extinction_cause, Constants::EXTINCTION_CAUSES),
+              era_breakdown:     count_by(:era, Constants::ERA_NAMES),
+              avg_preservation:  avg_field(:preservation),
+              avg_significance:  avg_field(:significance),
+              keystone_count:    @fossils.values.count(&:keystone?),
+              imprint_count:     @fossils.values.count(&:imprint?),
+              ancient_count:     @fossils.values.count(&:ancient?),
+              mass_extinction:   mass_extinction?
             }
           end
 
